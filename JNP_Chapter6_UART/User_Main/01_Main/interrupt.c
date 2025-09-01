@@ -1,6 +1,7 @@
 #include "main.h"
 
-uint16_t RX_Data = 0;
+uint8_t RX_Data[10] = {0};
+uint16_t RX_Count = 0;
 
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
@@ -23,7 +24,21 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
 	if(huart->Instance == huart3.Instance)
 	{
-		HAL_UART_Receive_IT(&huart3,&mcu.interface.uart_rx_data , 1);
-		RX_Data = mcu.interface.uart_rx_data;
+//		HAL_UART_Receive_IT(&huart3,&mcu.interface.uart_rx_data , 1);
+//		RX_Data = mcu.interface.uart_rx_data;
+
+		RX_Data[RX_Count++] = mcu.interface.uart_rx_data;
+		if(RX_Count >= 10)
+		{
+			RX_Count = 0;
+		}
+	}
+}
+
+void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
+{
+	if(huart->Instance == huart3.Instance)
+	{
+		system_interfcae_tx();
 	}
 }
