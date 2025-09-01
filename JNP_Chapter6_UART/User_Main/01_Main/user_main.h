@@ -19,6 +19,7 @@ struct count_structure
 struct interface_structure
 {
 	uint8_t uart_rx_data;
+	uint8_t uart_500ms_flag;
 };
 
 struct mcu_structure

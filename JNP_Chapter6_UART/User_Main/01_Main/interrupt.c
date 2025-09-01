@@ -13,6 +13,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 			// mcu.count.timer_count == 100 is equal to 500ms
 			mcu.count.timer_count = 0;
 			mcu.count.timer_500ms_flag += 1;
+			mcu.interface.uart_500ms_flag = 1;
 		}
 	}
 }
